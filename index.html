@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТурБук - Конфигурация бронирования туров</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Верхняя панель -->
+        <div class="app-header">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <span>ТурБук</span>
+                <small>Конфигурация v1.0</small>
+            </div>
+            <div class="header-menu">
+                <button onclick="showHelp()" class="icon-btn" title="Справка">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+                <button onclick="exportData()" class="icon-btn" title="Выгрузить данные">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button onclick="document.getElementById('importFile').click()" class="icon-btn" title="Загрузить данные">
+                    <i class="fas fa-upload"></i>
+                </button>
+                <input type="file" id="importFile" style="display: none" accept=".json" onchange="importData(this.files[0])">
+            </div>
+        </div>
+
+        <!-- Основная панель -->
+        <div class="app-main">
+            <!-- Боковое меню (разделы конфигурации) -->
+            <div class="app-sidebar">
+                <div class="sidebar-menu">
+                    <a href="#" class="menu-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Рабочий стол</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="tours">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Справочник "Туры"</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="bookings">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Документ "Бронирования"</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>Справочник "Пользователи"</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Отчеты</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Рабочая область -->
+            <div class="app-content">
+                <div id="dashboardPage" class="page active">
+                    <div class="welcome-card">
+                        <h1>Добро пожаловать в конфигурацию "ТурБук"</h1>
+                        <p>Система для бронирования экскурсионных туров</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <div class="stat-info">
+                                <h3 id="toursCount">0</h3>
+                                <p>Туров</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info">
+                                <h3 id="usersCount">0</h3>
+                                <p>Пользователей</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-ticket-alt"></i>
+                            <div class="stat-info">
+                                <h3 id="bookingsCount">0</h3>
+                                <p>Бронирований</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popular-tours-section">
+                        <h2>Популярные туры</h2>
+                        <div class="tours-grid" id="popularTours"></div>
+                    </div>
+                </div>
+
+                <div id="toursPage" class="page">
+                    <div class="page-header">
+                        <h2>Справочник "Туры"</h2>
+                        <button class="btn btn-primary" onclick="window.location.href='modules/tours/tours.html'">
+                            <i class="fas fa-eye"></i> Открыть справочник
+                        </button>
+                    </div>
+                    <div class="tours-grid" id="allTours"></div>
+                </div>
+
+                <div id="bookingsPage" class="page">
+                    <div class="page-header">
+                        <h2>Документ "Бронирования"</h2>
+                        <button class="btn btn-primary" onclick="window.location.href='modules/bookings/bookings.html'">
+                            <i class="fas fa-eye"></i> Открыть журнал
+                        </button>
+                    </div>
+                    <div id="bookingsList" class="bookings-list"></div>
+                </div>
+
+                <div id="usersPage" class="page">
+                    <div class="page-header">
+                        <h2>Справочник "Пользователи"</h2>
+                        <div id="authSection"></div>
+                    </div>
+                </div>
+
+                <div id="reportsPage" class="page">
+                    <div class="page-header">
+                        <h2>Отчеты</h2>
+                        <p>Статистика по продажам и загрузке туров</p>
+                    </div>
+                    <div id="reportsContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-footer">
+            <span>© 2026 Конфигурация "ТурБук" | Студент ГБПОУ КС №54</span>
+        </div>
+    </div>
+
+    <script src="core/config.js"></script>
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        function showHelp() {
+            alert('Конфигурация "ТурБук"\nВерсия: 1.0\n\nНазначение: Бронирование экскурсионных туров\n\nРазделы:\n- Справочник "Туры"\n- Справочник "Пользователи"\n- Документ "Бронирования"\n- Отчеты');
+        }
+        
+        function updateStats() {
+            document.getElementById('toursCount').innerText = tours.length;
+            document.getElementById('usersCount').innerText = users.length;
+            document.getElementById('bookingsCount').innerText = bookings.length;
+        }
+        
+        // Навигация между страницами
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = item.dataset.page;
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(page + 'Page').classList.add('active');
+                
+                if (page === 'dashboard') {
+                    loadPopularTours();
+                    updateStats();
+                } else if (page === 'tours') {
+                    loadAllTours();
+                } else if (page === 'bookings') {
+                    loadBookings();
+                } else if (page === 'reports') {
+                    loadReports();
+                }
+            });
+        });
+        
+        function loadReports() {
+            const container = document.getElementById('reportsContent');
+            const totalSales = bookings.reduce((sum, b) => sum + (b.status === 'paid' ? b.total : 0), 0);
+            const pendingPayments = bookings.filter(b => b.status === 'pending').length;
+            const completedBookings = bookings.filter(b => b.status === 'paid').length;
+            
+            container.innerHTML = `
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Общая выручка</h3>
+                        <div class="report-value">${totalSales.toLocaleString()} ₽</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>Ожидают оплаты</h3>
+                        <div class="report-value">${pendingPayments}</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>Завершенных бронирований</h3>
+                        <div class="report-value">${completedBookings}</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>Средний чек</h3>
+                        <div class="report-value">${completedBookings ? Math.round(totalSales / completedBookings).toLocaleString() : 0} ₽</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        checkAuth();
+        loadPopularTours();
+        updateStats();
+    </script>
+</body>
+</html>

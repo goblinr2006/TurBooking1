@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТурБук - Подробнее о туре</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <span>ТурБук</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="tours.html">Туры</a></li>
+                <li><a href="bookings.html">Мои бронирования</a></li>
+            </ul>
+            <div id="authSection"></div>
+        </div>
+    </nav>
+
+    <section class="tour-detail-section">
+        <div class="container">
+            <div id="tourDetail" class="tour-detail-card">
+                <div class="tour-detail-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Загрузка информации о туре...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ТурБук. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        checkAuth();
+        loadTourDetail();
+    </script>
+</body>
+</html>

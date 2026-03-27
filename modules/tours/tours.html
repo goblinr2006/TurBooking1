@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туры - ТурБук</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <span>ТурБук</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="tours.html" class="active">Туры</a></li>
+                <li><a href="booking.html">Мои бронирования</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина <span id="cartCount" class="cart-count">0</span></a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <a href="login.html" class="btn btn-outline">Войти</a>
+                <a href="register.html" class="btn btn-primary">Регистрация</a>
+            </div>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span id="username"></span>
+                <button onclick="logout()" class="btn-logout">Выйти</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Наши туры и экскурсии</h1>
+            <p>Выберите путешествие своей мечты</p>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="container">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="Поиск по названию..." class="filter-input">
+                <select id="locationFilter" class="filter-select">
+                    <option value="">Все направления</option>
+                    <option value="Москва">Москва</option>
+                    <option value="Санкт-Петербург">Санкт-Петербург</option>
+                    <option value="Казань">Казань</option>
+                    <option value="Сочи">Сочи</option>
+                </select>
+                <input type="number" id="minPrice" placeholder="Мин. цена" class="filter-input">
+                <input type="number" id="maxPrice" placeholder="Макс. цена" class="filter-input">
+                <button onclick="filterTours()" class="btn btn-primary">Найти</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="tours-section">
+        <div class="container">
+            <div class="tours-grid" id="allTours"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ТурБук. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+<script src="main.js"></script>
+<script>
+    checkAuth();
+    loadAllTours();
+        updateCartCount();
+    </script>
+</body>
+</html>

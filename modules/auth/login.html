@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - ТурБук</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <span>ТурБук</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="tours.html">Туры</a></li>
+                <li><a href="booking.html">Мои бронирования</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Корзина <span id="cartCount" class="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <h2>Вход в аккаунт</h2>
+                <form id="loginForm" onsubmit="return login(event)">
+                    <div class="form-group">
+                        <label>Имя пользователя или Email</label>
+                        <input type="text" id="loginUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </form>
+                <p class="auth-link">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ТурБук. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        updateCartCount();
+    </script>
+</body>
+</html>
