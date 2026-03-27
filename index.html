@@ -3,39 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ТурБук - Конфигурация бронирования туров</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ТурБук | Современная конфигурация бронирования туров</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Верхняя панель -->
-        <div class="app-header">
+        <!-- Header -->
+        <header class="app-header">
             <div class="logo">
                 <i class="fas fa-landmark"></i>
                 <span>ТурБук</span>
-                <small>Конфигурация v1.0</small>
+                <small>v1.0</small>
             </div>
             <div class="header-menu">
                 <button onclick="showHelp()" class="icon-btn" title="Справка">
                     <i class="fas fa-question-circle"></i>
                 </button>
-                <button onclick="exportData()" class="icon-btn" title="Выгрузить данные">
+                <button onclick="exportData()" class="icon-btn" title="Экспорт">
                     <i class="fas fa-download"></i>
                 </button>
-                <button onclick="document.getElementById('importFile').click()" class="icon-btn" title="Загрузить данные">
+                <button onclick="document.getElementById('importFile').click()" class="icon-btn" title="Импорт">
                     <i class="fas fa-upload"></i>
                 </button>
                 <input type="file" id="importFile" style="display: none" accept=".json" onchange="importData(this.files[0])">
+                <div id="authSection"></div>
             </div>
-        </div>
+        </header>
 
-        <!-- Основная панель -->
+        <!-- Main -->
         <div class="app-main">
-            <!-- Боковое меню (разделы конфигурации) -->
-            <div class="app-sidebar">
-                <div class="sidebar-menu">
+            <!-- Sidebar -->
+            <aside class="app-sidebar">
+                <nav class="sidebar-menu">
                     <a href="#" class="menu-item active" data-page="dashboard">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Рабочий стол</span>
@@ -48,23 +49,20 @@
                         <i class="fas fa-ticket-alt"></i>
                         <span>Документ "Бронирования"</span>
                     </a>
-                    <a href="#" class="menu-item" data-page="users">
-                        <i class="fas fa-users"></i>
-                        <span>Справочник "Пользователи"</span>
-                    </a>
                     <a href="#" class="menu-item" data-page="reports">
-                        <i class="fas fa-chart-bar"></i>
+                        <i class="fas fa-chart-line"></i>
                         <span>Отчеты</span>
                     </a>
-                </div>
-            </div>
+                </nav>
+            </aside>
 
-            <!-- Рабочая область -->
-            <div class="app-content">
+            <!-- Content -->
+            <main class="app-content">
+                <!-- Dashboard -->
                 <div id="dashboardPage" class="page active">
                     <div class="welcome-card">
-                        <h1>Добро пожаловать в конфигурацию "ТурБук"</h1>
-                        <p>Система для бронирования экскурсионных туров</p>
+                        <h1>Добро пожаловать в ТурБук</h1>
+                        <p>Современная конфигурация для бронирования экскурсионных туров</p>
                     </div>
                     
                     <div class="stats-grid">
@@ -72,7 +70,7 @@
                             <i class="fas fa-map-marked-alt"></i>
                             <div class="stat-info">
                                 <h3 id="toursCount">0</h3>
-                                <p>Туров</p>
+                                <p>Доступных туров</p>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -92,51 +90,48 @@
                     </div>
 
                     <div class="popular-tours-section">
-                        <h2>Популярные туры</h2>
+                        <h2 style="margin-bottom: 1.5rem;">✨ Популярные туры</h2>
                         <div class="tours-grid" id="popularTours"></div>
                     </div>
                 </div>
 
+                <!-- Tours -->
                 <div id="toursPage" class="page">
-                    <div class="page-header">
-                        <h2>Справочник "Туры"</h2>
-                        <button class="btn btn-primary" onclick="window.location.href='modules/tours/tours.html'">
-                            <i class="fas fa-eye"></i> Открыть справочник
-                        </button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2>🗺️ Справочник "Туры"</h2>
+                        <div style="display: flex; gap: 1rem;">
+                            <input type="text" id="searchInput" placeholder="🔍 Поиск туров..." class="filter-input" style="padding: 10px 16px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <select id="locationFilter" class="filter-select" style="padding: 10px 16px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                <option value="">Все города</option>
+                                <option value="Москва">Москва</option>
+                                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                                <option value="Казань">Казань</option>
+                                <option value="Сочи">Сочи</option>
+                            </select>
+                            <button onclick="filterTours()" class="btn btn-primary">Найти</button>
+                        </div>
                     </div>
                     <div class="tours-grid" id="allTours"></div>
                 </div>
 
+                <!-- Bookings -->
                 <div id="bookingsPage" class="page">
-                    <div class="page-header">
-                        <h2>Документ "Бронирования"</h2>
-                        <button class="btn btn-primary" onclick="window.location.href='modules/bookings/bookings.html'">
-                            <i class="fas fa-eye"></i> Открыть журнал
-                        </button>
-                    </div>
+                    <h2 style="margin-bottom: 1.5rem;">🎫 Документ "Бронирования"</h2>
                     <div id="bookingsList" class="bookings-list"></div>
                 </div>
 
-                <div id="usersPage" class="page">
-                    <div class="page-header">
-                        <h2>Справочник "Пользователи"</h2>
-                        <div id="authSection"></div>
-                    </div>
-                </div>
-
+                <!-- Reports -->
                 <div id="reportsPage" class="page">
-                    <div class="page-header">
-                        <h2>Отчеты</h2>
-                        <p>Статистика по продажам и загрузке туров</p>
-                    </div>
+                    <h2 style="margin-bottom: 1.5rem;">📊 Отчеты</h2>
                     <div id="reportsContent"></div>
                 </div>
-            </div>
+            </main>
         </div>
 
-        <div class="app-footer">
-            <span>© 2026 Конфигурация "ТурБук" | Студент ГБПОУ КС №54</span>
-        </div>
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>© 2026 Конфигурация "ТурБук" | Разработано для ГБПОУ КС №54</p>
+        </footer>
     </div>
 
     <script src="core/config.js"></script>
@@ -144,7 +139,7 @@
     <script src="main.js"></script>
     <script>
         function showHelp() {
-            alert('Конфигурация "ТурБук"\nВерсия: 1.0\n\nНазначение: Бронирование экскурсионных туров\n\nРазделы:\n- Справочник "Туры"\n- Справочник "Пользователи"\n- Документ "Бронирования"\n- Отчеты');
+            alert('🏛️ Конфигурация "ТурБук"\n\nВерсия: 1.0\nРазработчик: Студент ГБПОУ КС №54\n\nНазначение: Автоматизация бронирования экскурсионных туров\n\nРазделы:\n• Справочник "Туры"\n• Документ "Бронирования"\n• Отчеты по продажам');
         }
         
         function updateStats() {
@@ -153,7 +148,48 @@
             document.getElementById('bookingsCount').innerText = bookings.length;
         }
         
-        // Навигация между страницами
+        function loadReports() {
+            const container = document.getElementById('reportsContent');
+            const totalSales = bookings.reduce((sum, b) => sum + (b.status === 'paid' ? b.total : 0), 0);
+            const pendingPayments = bookings.filter(b => b.status === 'pending').length;
+            const completedBookings = bookings.filter(b => b.status === 'paid').length;
+            const popularTours = {};
+            bookings.forEach(b => {
+                if (b.status === 'paid') {
+                    popularTours[b.title] = (popularTours[b.title] || 0) + b.quantity;
+                }
+            });
+            const topTour = Object.entries(popularTours).sort((a,b) => b[1] - a[1])[0];
+            
+            container.innerHTML = `
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>💰 Общая выручка</h3>
+                        <div class="report-value">${totalSales.toLocaleString()} ₽</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>⏳ Ожидают оплаты</h3>
+                        <div class="report-value">${pendingPayments}</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>✅ Завершенных бронирований</h3>
+                        <div class="report-value">${completedBookings}</div>
+                    </div>
+                    <div class="report-card">
+                        <h3>📈 Средний чек</h3>
+                        <div class="report-value">${completedBookings ? Math.round(totalSales / completedBookings).toLocaleString() : 0} ₽</div>
+                    </div>
+                    ${topTour ? `
+                    <div class="report-card">
+                        <h3>⭐ Самый популярный тур</h3>
+                        <div class="report-value">${topTour[0]}</div>
+                        <p style="margin-top: 0.5rem;">${topTour[1]} бронирований</p>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -175,34 +211,6 @@
                 }
             });
         });
-        
-        function loadReports() {
-            const container = document.getElementById('reportsContent');
-            const totalSales = bookings.reduce((sum, b) => sum + (b.status === 'paid' ? b.total : 0), 0);
-            const pendingPayments = bookings.filter(b => b.status === 'pending').length;
-            const completedBookings = bookings.filter(b => b.status === 'paid').length;
-            
-            container.innerHTML = `
-                <div class="reports-grid">
-                    <div class="report-card">
-                        <h3>Общая выручка</h3>
-                        <div class="report-value">${totalSales.toLocaleString()} ₽</div>
-                    </div>
-                    <div class="report-card">
-                        <h3>Ожидают оплаты</h3>
-                        <div class="report-value">${pendingPayments}</div>
-                    </div>
-                    <div class="report-card">
-                        <h3>Завершенных бронирований</h3>
-                        <div class="report-value">${completedBookings}</div>
-                    </div>
-                    <div class="report-card">
-                        <h3>Средний чек</h3>
-                        <div class="report-value">${completedBookings ? Math.round(totalSales / completedBookings).toLocaleString() : 0} ₽</div>
-                    </div>
-                </div>
-            `;
-        }
         
         checkAuth();
         loadPopularTours();
